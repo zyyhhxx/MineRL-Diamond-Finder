@@ -151,13 +151,15 @@ def _main(args):
     # calculate corresponding `steps` and `eval_interval` according to frameskip
     # = 1333 episodes if we count an episode as 6000 frames,
     # = 1000 episodes if we count an episode as 8000 frames.
-    maximum_frames = 8000000
+    maximum_frames = 10000
     if args.frame_skip is None:
         steps = maximum_frames
         eval_interval = 6000 * 100  # (approx.) every 100 episode (counts "1 episode = 6000 steps")
     else:
         steps = maximum_frames // args.frame_skip
         eval_interval = 6000 * 100 // args.frame_skip  # (approx.) every 100 episode (counts "1 episode = 6000 steps")
+
+    logger.info("Will train {} steps".format(steps))
 
     agent = get_agent(
         n_actions=env.action_space.n, arch=args.arch, n_input_channels=env.observation_space.shape[0],
