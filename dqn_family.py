@@ -48,6 +48,7 @@ def main():
                         help='Directory path to save output files. If it does not exist, it will be created.')
     parser.add_argument('--seed', type=int, default=0, help='Random seed [0, 2 ** 31)')
     parser.add_argument('--gpu', type=int, default=0, help='GPU to use, set to -1 if no GPU.')
+    parser.add_argument('--maximum-frames', type=int, default=500000, help='Maximum number of frames')
     parser.add_argument('--demo', action='store_true', default=False)
     parser.add_argument('--load', type=str, default=None)
     parser.add_argument('--final-exploration-frames', type=int, default=10 ** 6,
@@ -151,7 +152,7 @@ def _main(args):
     # calculate corresponding `steps` and `eval_interval` according to frameskip
     # = 1333 episodes if we count an episode as 6000 frames,
     # = 1000 episodes if we count an episode as 8000 frames.
-    maximum_frames = 10000
+    maximum_frames = args.maximum_frames
     if args.frame_skip is None:
         steps = maximum_frames
         eval_interval = 6000 * 100  # (approx.) every 100 episode (counts "1 episode = 6000 steps")
